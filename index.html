@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>만나러 갈게, 비는 오지만</title>
+
+  <!-- Pretendard Font -->
+  <link rel="stylesheet" as="style" crossorigin
+    href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+
+  <style>
+    :root {
+      --bg: #eeeeee;
+      --white: #ffffff;
+      --black: #000000;
+      --text: #111111;
+      --muted: #666666;
+      --line: #dddddd;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      min-height: 100%;
+    }
+
+    body {
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      word-break: keep-all;
+    }
+
+    button {
+      font-family: inherit;
+      border: 0;
+      cursor: pointer;
+    }
+
+    .hero {
+      background: var(--white);
+      min-height: 220px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero h1 {
+      font-size: clamp(24px, 4vw, 38px);
+      font-weight: 500;
+      letter-spacing: -0.04em;
+      text-align: center;
+      padding: 64px 24px;
+    }
+
+    .container {
+      width: min(100%, 980px);
+      margin: 0 auto;
+      padding: 0 28px 72px;
+    }
+
+    .section {
+      padding: 44px 0;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 24px;
+      font-weight: 800;
+      margin-bottom: 28px;
+      letter-spacing: -0.03em;
+    }
+
+    .about-text {
+      max-width: 760px;
+      margin: 0 auto 34px;
+      text-align: center;
+      font-size: 15px;
+      line-height: 1.75;
+      color: #333;
+    }
+
+    .info-list {
+      max-width: 760px;
+      margin: 0 auto;
+      display: grid;
+      gap: 12px;
+    }
+
+    .info-row {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      min-height: 48px;
+      align-items: center;
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      overflow: hidden;
+      font-size: 14px;
+    }
+
+    .info-label {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-right: 1px solid var(--line);
+      font-weight: 500;
+      color: #333;
+    }
+
+    .info-value {
+      text-align: center;
+      padding: 0 20px;
+      color: #222;
+    }
+
+    .nav-buttons {
+      max-width: 860px;
+      margin: 0 auto;
+      padding-top: 6px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .nav-button {
+      height: 54px;
+      border-radius: 999px;
+      background: var(--black);
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      transition: transform 0.15s ease, opacity 0.15s ease;
+    }
+
+    .nav-button:hover {
+      transform: translateY(-1px);
+      opacity: 0.86;
+    }
+
+    .nav-button.active {
+      opacity: 0.72;
+    }
+
+    .hidden-area {
+      max-width: 860px;
+      margin: 34px auto 0;
+    }
+
+    .panel {
+      display: none;
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 34px;
+      animation: fadeIn 0.22s ease;
+    }
+
+    .panel.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .panel-title {
+      text-align: center;
+      font-size: 22px;
+      font-weight: 800;
+      margin-bottom: 22px;
+      letter-spacing: -0.03em;
+    }
+
+    .content-card {
+      background: #fafafa;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 28px;
+      margin-bottom: 20px;
+      line-height: 1.8;
+      font-size: 15px;
+      text-align: center;
+      color: #333;
+    }
+
+    .content-card:last-child {
+      margin-bottom: 0;
+    }
+
+    .sub-title {
+      text-align: center;
+      font-size: 17px;
+      font-weight: 800;
+      margin: 28px 0 14px;
+    }
+
+    .cast-list {
+      display: grid;
+      gap: 16px;
+    }
+
+    .cast-card {
+      background: #fafafa;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 18px;
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .photo {
+      width: 120px;
+      aspect-ratio: 1 / 1;
+      background: #d9d9d9;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #999;
+      font-size: 13px;
+      overflow: hidden;
+    }
+
+    .photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .cast-name {
+      font-size: 19px;
+      font-weight: 800;
+      margin-bottom: 10px;
+      letter-spacing: -0.02em;
+    }
+
+    .cast-role {
+      font-size: 14px;
+      line-height: 1.65;
+      color: #333;
+    }
+
+    .credit-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .credit-row {
+      background: #fafafa;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 18px 22px;
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 18px;
+      align-items: start;
+      font-size: 15px;
+    }
+
+    .credit-role {
+      font-weight: 800;
+    }
+
+    .credit-name {
+      color: #333;
+      line-height: 1.6;
+    }
+
+    .close-button {
+      margin: 28px auto 0;
+      height: 42px;
+      padding: 0 24px;
+      border-radius: 999px;
+      background: #222;
+      color: white;
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    footer {
+      text-align: center;
+      padding: 40px 24px;
+      color: #777;
+      font-size: 13px;
+    }
+
+    @media (max-width: 799px) {
+      .hero {
+        min-height: 120px;
+      }
+
+      .hero h1 {
+        font-size: 22px;
+        padding: 42px 18px;
+      }
+
+      .container {
+        padding: 0 16px 56px;
+      }
+
+      .section {
+        padding: 34px 0;
+      }
+
+      .section-title {
+        font-size: 18px;
+        margin-bottom: 18px;
+      }
+
+      .about-text {
+        font-size: 12px;
+        line-height: 1.7;
+        margin-bottom: 22px;
+      }
+
+      .info-row {
+        grid-template-columns: 86px 1fr;
+        min-height: 40px;
+        font-size: 11px;
+      }
+
+      .info-value {
+        padding: 0 12px;
+      }
+
+      .nav-buttons {
+        gap: 10px;
+      }
+
+      .nav-button {
+        height: 38px;
+        font-size: 11px;
+      }
+
+      .hidden-area {
+        margin-top: 22px;
+      }
+
+      .panel {
+        padding: 20px 14px;
+        border-radius: 14px;
+      }
+
+      .panel-title {
+        font-size: 17px;
+        margin-bottom: 16px;
+      }
+
+      .content-card {
+        padding: 18px 14px;
+        font-size: 12px;
+        line-height: 1.75;
+      }
+
+      .sub-title {
+        font-size: 14px;
+      }
+
+      .cast-card {
+        grid-template-columns: 82px 1fr;
+        gap: 12px;
+        padding: 12px;
+      }
+
+      .photo {
+        width: 82px;
+      }
+
+      .cast-name {
+        font-size: 14px;
+        margin-bottom: 6px;
+      }
+
+      .cast-role {
+        font-size: 11px;
+      }
+
+      .credit-row {
+        grid-template-columns: 78px 1fr;
+        gap: 10px;
+        padding: 14px;
+        font-size: 12px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="hero">
+    <h1>만나러 갈게, 비는 오지만</h1>
+  </header>
+
+  <main class="container">
+    <section class="section">
+      <h2 class="section-title">About</h2>
+      <p class="about-text">
+        연극 &lt;만나러 갈게, 비는 오지만&gt;은 오랜 시간 동안 서로에게 닿지 못했던 마음들이
+        다시 만나는 순간을 그린 공연입니다. 비가 내리는 하루를 배경으로,
+        인물들은 각자의 기억과 후회, 그리고 다시 건네고 싶은 말을 마주합니다.
+      </p>
+
+      <div class="info-list">
+        <div class="info-row">
+          <div class="info-label">공연 일시</div>
+          <div class="info-value">6/1 - 6/3 · 16:00, 20:00</div>
+        </div>
+        <div class="info-row">
+          <div class="info-label">공연 장소</div>
+          <div class="info-value">OO공연장 (서울시 OO구 OO로 000)</div>
+        </div>
+      </div>
+    </section>
+
+    <nav class="nav-buttons" aria-label="항목 선택">
+      <button class="nav-button" type="button" data-panel="synopsis">SYNOPSIS →</button>
+      <button class="nav-button" type="button" data-panel="cast">CAST →</button>
+      <button class="nav-button" type="button" data-panel="credit">CREDIT →</button>
+      <button class="nav-button" type="button" data-panel="sponsor">PRODUCTION &amp; SPONSOR →</button>
+    </nav>
+
+    <section class="hidden-area">
+      <article class="panel" id="synopsis">
+        <h2 class="panel-title">Synopsis</h2>
+        <div class="content-card">
+          공연 줄거리 내용을 여기에 입력하세요.<br />
+          예: 비가 내리는 어느 날, 오래전 헤어진 두 사람은 같은 장소에서 우연히 다시 마주한다.
+          말하지 못한 기억과 오해가 하나씩 드러나고, 두 사람은 지난 시간을 다시 바라보기 시작한다.
+        </div>
+
+        <h3 class="sub-title">연출의 글</h3>
+        <div class="content-card">
+          연출의 글 내용을 여기에 입력하세요.<br />
+          예: 이 작품은 만남보다 어려운 것이 다시 마음을 여는 일이라는 생각에서 출발했습니다.
+          관객들이 각자의 비 오는 날과 떠오르는 사람을 조용히 떠올릴 수 있기를 바랍니다.
+        </div>
+
+        <button class="close-button" type="button">닫기</button>
+      </article>
+
+      <article class="panel" id="cast">
+        <h2 class="panel-title">CAST</h2>
+
+        <div class="cast-list">
+          <div class="cast-card">
+            <div class="photo">사진</div>
+            <div>
+              <h3 class="cast-name">이름</h3>
+              <p class="cast-role">맡은 배역: 배역명<br />간단한 소개 문구를 입력하세요.</p>
+            </div>
+          </div>
+
+          <div class="cast-card">
+            <div class="photo">사진</div>
+            <div>
+              <h3 class="cast-name">이름</h3>
+              <p class="cast-role">맡은 배역: 배역명<br />간단한 소개 문구를 입력하세요.</p>
+            </div>
+          </div>
+
+          <div class="cast-card">
+            <div class="photo">사진</div>
+            <div>
+              <h3 class="cast-name">이름</h3>
+              <p class="cast-role">맡은 배역: 배역명<br />간단한 소개 문구를 입력하세요.</p>
+            </div>
+          </div>
+        </div>
+
+        <button class="close-button" type="button">닫기</button>
+      </article>
+
+      <article class="panel" id="credit">
+        <h2 class="panel-title">CREDIT</h2>
+
+        <div class="credit-list">
+          <div class="credit-row">
+            <div class="credit-role">기획</div>
+            <div class="credit-name">이름</div>
+          </div>
+          <div class="credit-row">
+            <div class="credit-role">연출</div>
+            <div class="credit-name">이름</div>
+          </div>
+          <div class="credit-row">
+            <div class="credit-role">작가</div>
+            <div class="credit-name">이름</div>
+          </div>
+          <div class="credit-row">
+            <div class="credit-role">무대</div>
+            <div class="credit-name">이름</div>
+          </div>
+          <div class="credit-row">
+            <div class="credit-role">조명</div>
+            <div class="credit-name">이름</div>
+          </div>
+          <div class="credit-row">
+            <div class="credit-role">음향</div>
+            <div class="credit-name">이름</div>
+          </div>
+        </div>
+
+        <button class="close-button" type="button">닫기</button>
+      </article>
+
+      <article class="panel" id="sponsor">
+        <h2 class="panel-title">PRODUCTION &amp; SPONSOR</h2>
+
+        <div class="content-card">
+          <strong>제작 단체명</strong><br /><br />
+          제작 단체 소개를 여기에 입력하세요.
+          공연의 기획 의도, 활동 방향, 주요 제작 이력 등을 간단히 작성하면 됩니다.
+        </div>
+
+        <div class="content-card">
+          <strong>후원 단체명</strong><br /><br />
+          후원 단체 소개를 여기에 입력하세요.
+          후원 목적, 단체의 성격, 공연과의 연결점을 간단히 작성하면 됩니다.
+        </div>
+
+        <button class="close-button" type="button">닫기</button>
+      </article>
+    </section>
+  </main>
+
+  <footer>
+    © 만나러 갈게, 비는 오지만
+  </footer>
+
+  <script>
+    const navButtons = document.querySelectorAll(".nav-button");
+    const panels = document.querySelectorAll(".panel");
+    const closeButtons = document.querySelectorAll(".close-button");
+
+    function openPanel(panelId) {
+      panels.forEach((panel) => {
+        panel.classList.toggle("active", panel.id === panelId);
+      });
+
+      navButtons.forEach((button) => {
+        button.classList.toggle("active", button.dataset.panel === panelId);
+      });
+    }
+
+    function closePanels() {
+      panels.forEach((panel) => panel.classList.remove("active"));
+      navButtons.forEach((button) => button.classList.remove("active"));
+    }
+
+    navButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const panelId = button.dataset.panel;
+        const alreadyOpen = document.getElementById(panelId).classList.contains("active");
+
+        if (alreadyOpen) {
+          closePanels();
+        } else {
+          openPanel(panelId);
+        }
+      });
+    });
+
+    closeButtons.forEach((button) => {
+      button.addEventListener("click", closePanels);
+    });
+  </script>
+</body>
+</html>
