@@ -415,13 +415,22 @@
   }
 
     .nav-buttons {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .nav-button {
-    width: 100%;
-  }
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: nowrap;
+    }
+    
+    .nav-button {
+      width: calc((100% - 18px) / 4);
+      height: 38px;
+      font-size: 9px;
+      padding: 0 4px;
+      white-space: normal;
+      text-align: center;
+      line-height: 1.15;
     }
     
   </style>
@@ -482,11 +491,9 @@
 
         <div class="cast-list">
           <div class="cast-card">
+            <div class="photo">사진</div>
             <div>
-            <img width="150" height="200" alt="Image" src="https://github.com/user-attachments/assets/3c682cd1-39a8-4d04-971a-40922364cf42" />
-            </div>
-            <div>
-              <h3 class="cast-name">예시</h3>
+              <h3 class="cast-name">이름</h3>
               <p class="cast-role">배역명<br />간단한 소개 문구</p>
             </div>
           </div>
@@ -516,11 +523,11 @@
 
         <div class="credit-list">
           <div class="credit-row">
-            <div class="credit-role">기획</div>
+            <div class="credit-role">연출</div>
             <div class="credit-name">이름</div>
           </div>
           <div class="credit-row">
-            <div class="credit-role">연출</div>
+            <div class="credit-role">연기</div>
             <div class="credit-name">이름</div>
           </div>
           <div class="credit-row">
@@ -558,7 +565,7 @@
   </main>
 
   <footer>
-    © 만나러 갈게, 비는 오지만
+    © 프로젝트 온
   </footer>
 
   <script>
